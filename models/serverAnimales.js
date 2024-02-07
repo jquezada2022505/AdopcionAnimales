@@ -1,6 +1,6 @@
 const express = require('express');
 const cors =  require('cors');
-const {dbConnection} = require('../db/config')
+const {dbConnection} = require('../db/configAnimales')
 
 class Server {
 
@@ -8,7 +8,6 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
         this.usuarioPath = '/api/usuarios';
-        this.animalesPath = '/api/animales';
 
         this.conectarDB();
         this.middlewares();
@@ -26,8 +25,7 @@ class Server {
     }
 
     routes(){
-        this.app.use(this.usuarioPath, require('../routes/user.routes'));
-        this.app.use(this.animalesPath, require('../routes/animales.routes'));
+        this.app.use(this.animalesPath, require('../routes/animales.routes'))
     }
 
     listen(){

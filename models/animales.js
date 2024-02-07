@@ -5,10 +5,10 @@ const AnimalesSchema = Schema({
         type: String,
         require: [true, 'El nombre debe de ser obligatorio']
     },
-    especie:{
+    especies:{
         type: String,
-        require: [true, 'la especie debe ser obligatoria'],
-        unique: true
+        require: [true],
+        enum: ["MAMIFERO", "AVES", "PECES"]
     },
     peso:{
         type: String,

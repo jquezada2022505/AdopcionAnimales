@@ -1,16 +1,17 @@
 const bcryptjs = require('bcryptjs');
-const Usuario = require('../models/animales');
+const Animales = require('../models/animales');
 const { model } = require('mongoose');
+const Especies = require('../models/Especies');
 
 const animalesPost = async (req, res) => {
-    const { nombre, especie, peso, altura } = req.body;
-    const animales = new Animales({ nombre, especie, peso, altura });
+    const { nombre, especies, peso, altura } = req.body;
+    const animales = new Animales({ nombre, especies, peso, altura });
 
     const salt = bcryptjs.genSaltSync();
     animales.nombre = bcryptjs.hashSync(nombre, salt);
 
     await animales.save();
-    console.log({ nombre, especie, peso, altura })
+    console.log({ nombre, especies, peso, altura })
     res.status(202).json({
         animales
     });
@@ -18,7 +19,7 @@ const animalesPost = async (req, res) => {
 
 const getAnimalesById = async (req, res) => {
     const { id } = req.params;
-    const usuario = await Usuario.findOne({ _id: id });
+    const animales = await Animales.findOne({ _id: id });
 
     res.status(200).json({
         animales
@@ -44,11 +45,11 @@ const animalesGet = async (req, res = response) => {
 
 const putAnimales = async (req, res = response) =>{
     const {id } = req.params;
-    const {_id, especie, google, altura, ...resto} = req.body
+    const {_id, especies, google, altura, ...resto} = req.body
 
-    if(nombre){
+    if(especies){
         const salt = bcryptjs.genSaltSync();
-        resto.nombre = bcryptjs.hashSync(nombre, salt);
+        resto.especies = bcryptjs.hashSync(especies, salt);
     }
 
     const animales = await Animales.findByIdAndUpdate(id, resto);
@@ -59,9 +60,20 @@ const putAnimales = async (req, res = response) =>{
     });
 }
 
+const animalesDelete = async (req, res) =>{
+    const{id} = req.params;
+    const animales = await Animales.findByIdAndUpdate(id, {estado: false});
+
+    res.status(200).json({
+        msg: 'Animal eliminado exitosamente',
+        animales
+    });
+}
+
 module.exports = {
     animalesPost,
     animalesGet,
     getAnimalesById,
-    putAnimales
+    putAnimales,
+    animalesDelete
 }
