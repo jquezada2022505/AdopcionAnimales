@@ -7,8 +7,7 @@ const AnimalesSchema = Schema({
     },
     especies:{
         type: String,
-        require: [true],
-        enum: ["MAMIFERO", "AVES", "PECES"]
+        require: [true, 'La especie debe de ser obligatorio']
     },
     peso:{
         type: String,
@@ -16,19 +15,11 @@ const AnimalesSchema = Schema({
     },
     altura:{
         type: String,
-        require: [true, 'la altura debe ser obligatoria'],
-        unique: true
-    },
-    img:{
-        type: String
+        require: [true, 'la altura debe ser obligatoria']
     },
     estado:{
         type: Boolean,
         default: true
-    },
-    google:{
-        type: Boolean,
-        default: false
     }
 
 });

@@ -2,7 +2,7 @@ const { validationResult } = require('express-validator');
 
 
 const validarCampos = (req, res, next) => {
-    console.log("funcion");
+    console.log("Validar Campos");
     const error = validationResult(req);
     
     if(!error.isEmpty()){
